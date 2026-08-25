@@ -106,9 +106,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <Sparkles size={18} />
               {!collapsed && <span>Career Intelligence</span>}
             </button>
-            <button onClick={() => onNavigate('/student/courses')} className={`menu-item-btn ${currentRoute === '/student/courses' ? 'active' : ''}`} title="Courses">
+            <button onClick={() => onNavigate('/student/courses')} className={`menu-item-btn ${currentRoute === '/student/courses' ? 'active' : ''}`} title="Course Store">
               <BookOpen size={18} />
-              {!collapsed && <span>Courses</span>}
+              {!collapsed && <span>Course Store</span>}
+            </button>
+            <button onClick={() => onNavigate('/student/mycourses')} className={`menu-item-btn ${currentRoute === '/student/mycourses' ? 'active' : ''}`} title="My Courses">
+              <Award size={18} />
+              {!collapsed && <span>My Courses</span>}
             </button>
             <button onClick={() => onNavigate('/student/opportunities')} className={`menu-item-btn ${currentRoute === '/student/opportunities' ? 'active' : ''}`} title="Opportunities">
               <Briefcase size={18} />

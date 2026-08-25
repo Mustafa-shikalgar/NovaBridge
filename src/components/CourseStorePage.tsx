@@ -27,8 +27,8 @@ export const initialStoreCourses: StoreCourse[] = [
     rating: 4.6,
     ratingCount: 14967,
     level: 'All levels',
-    priceINR: 429,
-    originalPriceINR: 3909,
+    priceINR: 1,
+    originalPriceINR: 1,
     imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80',
     category: 'Money Management Tools'
   },
@@ -41,8 +41,8 @@ export const initialStoreCourses: StoreCourse[] = [
     rating: 4.3,
     ratingCount: 13222,
     level: 'All levels',
-    priceINR: 509,
-    originalPriceINR: 4629,
+    priceINR: 1,
+    originalPriceINR: 1,
     imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80',
     category: 'Money Management Tools'
   },
@@ -55,8 +55,8 @@ export const initialStoreCourses: StoreCourse[] = [
     rating: 4.7,
     ratingCount: 900,
     level: 'All levels',
-    priceINR: 399,
-    originalPriceINR: 3199,
+    priceINR: 1,
+    originalPriceINR: 1,
     imageUrl: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80',
     category: 'Money Management Tools'
   },
@@ -69,8 +69,8 @@ export const initialStoreCourses: StoreCourse[] = [
     rating: 4.6,
     ratingCount: 17539,
     level: 'All levels',
-    priceINR: 469,
-    originalPriceINR: 3589,
+    priceINR: 1,
+    originalPriceINR: 1,
     imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80',
     category: 'Money Management Tools'
   },
@@ -83,8 +83,8 @@ export const initialStoreCourses: StoreCourse[] = [
     rating: 4.9,
     ratingCount: 24800,
     level: 'Advanced',
-    priceINR: 599,
-    originalPriceINR: 5999,
+    priceINR: 1,
+    originalPriceINR: 1,
     imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80',
     category: 'System Design & Engineering'
   },
@@ -97,8 +97,8 @@ export const initialStoreCourses: StoreCourse[] = [
     rating: 4.8,
     ratingCount: 8920,
     level: 'Intermediate - Expert',
-    priceINR: 499,
-    originalPriceINR: 4499,
+    priceINR: 1,
+    originalPriceINR: 1,
     imageUrl: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80',
     category: 'Algorithms & Coding'
   }
@@ -111,6 +111,28 @@ export const CourseStorePage: React.FC<{ user?: any }> = ({ user }) => {
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
+
+  // Load enrolled courses from DB on mount
+  React.useEffect(() => {
+    const fetchEnrolled = async () => {
+      try {
+        const raw = localStorage.getItem('novabridge_auth_session');
+        const token = raw ? JSON.parse(raw)?.token : null;
+        if (!token) return;
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+        const res = await fetch(`${apiUrl}/users/me/courses`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (data.success && data.data?.enrolledIds) {
+          setPurchasedCourses(data.data.enrolledIds);
+        }
+      } catch (_) {
+        // Silently fail — user can still buy, enrolled state resets on refresh
+      }
+    };
+    fetchEnrolled();
+  }, []);
 
   const categories = ['All', 'Money Management Tools', 'System Design & Engineering', 'Algorithms & Coding'];
 

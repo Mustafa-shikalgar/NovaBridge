@@ -39,6 +39,7 @@ import { TimelineSection } from './components/TimelineSection';
 import { CoursesSection } from './components/CoursesSection';
 import { CertificatesPage } from './components/CertificatesPage';
 import { CourseStorePage } from './components/CourseStorePage';
+import { MyCourses } from './components/MyCourses';
 import { ResumeModal } from './components/ResumeModal';
 import { EditProfileModal } from './components/EditProfileModal';
 import { UpdateLinksModal } from './components/UpdateLinksModal';
@@ -64,6 +65,7 @@ type AppRoute =
   | '/student/profile'
   | '/student/portfolio'
   | '/student/courses'
+  | '/student/mycourses'
   | '/student/certificates'
   | '/student/opportunities'
   | '/student/applications'
@@ -384,6 +386,10 @@ export function App() {
               <div>
                 <CourseStorePage user={user} />
               </div>
+            )}
+
+            {currentRoute === '/student/mycourses' && (
+              <MyCourses onNavigateToCourseStore={() => navigate('/student/courses')} />
             )}
 
             {currentRoute === '/student/certificates' && (

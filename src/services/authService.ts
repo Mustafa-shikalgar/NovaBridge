@@ -19,6 +19,8 @@ export interface AuthSession {
   token: string | null;
 }
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+
 const STORAGE_KEY = 'novabridge_auth_session';
 
 export const DEMO_CREDENTIALS = {
@@ -146,4 +148,48 @@ export const authenticateUser = (
   }
 
   return { success: false, message: 'Invalid credentials. Use demo accounts or enter valid email/password.' };
+};
+
+/**
+ * Calls the real backend /api/auth/login to get a proper JWT + DB user ID.
+ * Falls back gracefully if backend is unreachable.
+ */
+export const loginWithBackend = async (
+  email: string,
+  password: string
+): Promise<{ success: boolean; session?: AuthSession; message?: string }> => {
+  try {
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      return { success: false, message: data.message || 'Login failed' };
+    }
+
+    const { token, user } = data.data;
+    const session: AuthSession = {
+      isAuthenticated: true,
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role as UserRole,
+        avatarUrl: user.avatarUrl || '',
+        targetRole: user.targetRole,
+        institution: user.institution,
+        company: user.company,
+      },
+    };
+    saveSession(session);
+    return { success: true, session };
+  } catch (err) {
+    console.warn('Backend login unreachable, falling back to demo auth:', err);
+    return { success: false, message: 'Backend unreachable' };
+  }
 };

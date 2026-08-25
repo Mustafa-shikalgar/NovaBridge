@@ -4,6 +4,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 const paymentRoutes = require('./routes/paymentRoutes');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,6 +14,8 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   'http://localhost:3000',
   'http://127.0.0.1:3000',
+  'http://localhost:3001',
+  'http://127.0.0.1:3001',
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   'https://nova-bridge-taupe.vercel.app',  // Vercel production
@@ -35,6 +39,8 @@ app.use(express.json());
 
 // Register API Routes
 app.use('/api/payments', paymentRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // Serve static assets in production (from dist folder)
 const distPath = path.join(__dirname, '../dist');

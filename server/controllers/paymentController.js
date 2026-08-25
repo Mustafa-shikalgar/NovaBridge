@@ -19,12 +19,12 @@ exports.createOrder = async (req, res, next) => {
     }
 
     const COURSE_DEFAULTS = {
-      sc1: { customId: 'sc1', title: 'Mastering QuickBooks Online & Financial Bookkeeping', price: 429, instructor: 'Mark Smolen' },
-      sc2: { customId: 'sc2', title: 'SAP FICO (Financial Accounting & Management Accounting)', price: 509, instructor: 'Rana W Mehmood' },
-      sc3: { customId: 'sc3', title: 'QuickBooks Online Complex Issues And Advanced Techniques', price: 399, instructor: 'Mark Smolen' },
-      sc4: { customId: 'sc4', title: 'Excel Crash Course: Master Excel for Financial Analysis', price: 469, instructor: 'Scott Powell' },
-      sc5: { customId: 'sc5', title: 'Distributed System Design & High-Throughput Microservices', price: 599, instructor: 'Prof. Robert Morris (MIT)' },
-      sc6: { customId: 'sc6', title: 'Competitive Programming Masterclass (Codeforces Candidate Master)', price: 499, instructor: 'Jatin Vishwakarma (IITB)' },
+      sc1: { customId: 'sc1', title: 'Mastering QuickBooks Online & Financial Bookkeeping', price: 1, instructor: 'Mark Smolen' },
+      sc2: { customId: 'sc2', title: 'SAP FICO (Financial Accounting & Management Accounting)', price: 1, instructor: 'Rana W Mehmood' },
+      sc3: { customId: 'sc3', title: 'QuickBooks Online Complex Issues And Advanced Techniques', price: 1, instructor: 'Mark Smolen' },
+      sc4: { customId: 'sc4', title: 'Excel Crash Course: Master Excel for Financial Analysis', price: 1, instructor: 'Scott Powell' },
+      sc5: { customId: 'sc5', title: 'Distributed System Design & High-Throughput Microservices', price: 1, instructor: 'Prof. Robert Morris (MIT)' },
+      sc6: { customId: 'sc6', title: 'Competitive Programming Masterclass (Codeforces Candidate Master)', price: 1, instructor: 'Jatin Vishwakarma (IITB)' },
     };
 
     let course = await Course.findOne(query);

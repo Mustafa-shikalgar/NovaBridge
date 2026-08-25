@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Lock, ArrowRight, ShieldCheck, CheckCircle2, User, KeyRound } from 'lucide-react';
-import { authenticateUser, DEMO_CREDENTIALS, AuthSession } from '../../services/authService';
+import { authenticateUser, loginWithBackend, DEMO_CREDENTIALS, AuthSession } from '../../services/authService';
 
 interface StudentLoginPageProps {
   onLoginSuccess: (session: AuthSession) => void;
@@ -16,11 +16,21 @@ export const StudentLoginPage: React.FC<StudentLoginPageProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
+    // 1. Try real backend login first
+    const backendRes = await loginWithBackend(email, password);
+    if (backendRes.success && backendRes.session) {
+      setLoading(false);
+      onLoginSuccess(backendRes.session);
+      onNavigate('/student/dashboard');
+      return;
+    }
+
+    // 2. Fallback to local demo auth
     setTimeout(() => {
       const res = authenticateUser(email, password, 'student');
       setLoading(false);
@@ -33,9 +43,19 @@ export const StudentLoginPage: React.FC<StudentLoginPageProps> = ({
     }, 400);
   };
 
-  const handleQuickDemoLogin = () => {
+  const handleQuickDemoLogin = async () => {
     setEmail(DEMO_CREDENTIALS.student.email);
     setPassword(DEMO_CREDENTIALS.student.password);
+    setLoading(true);
+    // Try real backend first
+    const backendRes = await loginWithBackend(DEMO_CREDENTIALS.student.email, DEMO_CREDENTIALS.student.password);
+    setLoading(false);
+    if (backendRes.success && backendRes.session) {
+      onLoginSuccess(backendRes.session);
+      onNavigate('/student/dashboard');
+      return;
+    }
+    // Fallback
     const res = authenticateUser(DEMO_CREDENTIALS.student.email, DEMO_CREDENTIALS.student.password, 'student');
     if (res.success && res.session) {
       onLoginSuccess(res.session);
