@@ -25,6 +25,13 @@ import { AdminLoginPage } from './pages/auth/AdminLoginPage';
 
 // Role Dashboards
 import { StudentDashboard } from './pages/student/StudentDashboard';
+import { StudentProjectsPage } from './pages/student/StudentProjectsPage';
+import { StudentSkillsPage } from './pages/student/StudentSkillsPage';
+import { StudentAchievementsPage } from './pages/student/StudentAchievementsPage';
+import { StudentCareerIntelligencePage } from './pages/student/StudentCareerIntelligencePage';
+import { StudentMentorsPage } from './pages/student/StudentMentorsPage';
+import { StudentMessagesPage } from './pages/student/StudentMessagesPage';
+import { StudentApplicationsPage } from './pages/student/StudentApplicationsPage';
 import { RecruiterDashboard } from './pages/recruiter/RecruiterDashboard';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 
@@ -382,7 +389,7 @@ export function App() {
 
             {currentRoute === '/student/courses' && (
               <div>
-                <CourseStorePage user={user} />
+                <CourseStorePage />
               </div>
             )}
 
@@ -411,16 +418,44 @@ export function App() {
               </div>
             )}
 
-            {/* Contests, Settings, Messages pages - fallback to dashboard */}
-            {(currentRoute === '/student/messages' ||
-              currentRoute === '/student/notifications' ||
-              currentRoute === '/student/settings' ||
-              currentRoute === '/student/skills' ||
-              currentRoute === '/student/projects' ||
-              currentRoute === '/student/achievements' ||
-              currentRoute === '/student/mentors' ||
-              currentRoute === '/student/intelligence' ||
-              currentRoute === '/student/applications') && (
+            {/* Skills Page */}
+            {currentRoute === '/student/skills' && (
+              <StudentSkillsPage profile={profile} onNavigate={navigate} />
+            )}
+
+            {/* Projects Page */}
+            {currentRoute === '/student/projects' && (
+              <StudentProjectsPage profile={profile} onAddProject={handleAddProject} onNavigate={navigate} />
+            )}
+
+            {/* Achievements Page */}
+            {currentRoute === '/student/achievements' && (
+              <StudentAchievementsPage profile={profile} onNavigate={navigate} />
+            )}
+
+            {/* Career Intelligence Page */}
+            {currentRoute === '/student/intelligence' && (
+              <StudentCareerIntelligencePage profile={profile} user={user} onNavigate={navigate} />
+            )}
+
+            {/* Mentors Page */}
+            {currentRoute === '/student/mentors' && (
+              <StudentMentorsPage profile={profile} user={user} onNavigate={navigate} />
+            )}
+
+            {/* Messages Page */}
+            {currentRoute === '/student/messages' && (
+              <StudentMessagesPage profile={profile} user={user} onNavigate={navigate} />
+            )}
+
+            {/* Applications Page */}
+            {currentRoute === '/student/applications' && (
+              <StudentApplicationsPage profile={profile} user={user} onNavigate={navigate} />
+            )}
+
+            {/* Remaining placeholder pages */}
+            {(currentRoute === '/student/notifications' ||
+              currentRoute === '/student/settings') && (
               <div style={{ padding: '24px' }}>
                 <div className="placeholder-page-card color-card color-card-navy">
                   <div className="color-card-ribbon"></div>
