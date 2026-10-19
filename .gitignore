@@ -23,6 +23,17 @@ coverage/
 !.env.example
 !.env.template
 
+# Environment variables
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Server environment files
+server/.env
+server/.env.*
+!server/.env.example
+
 # Package manager
 # Keep package-lock.json, pnpm-lock.yaml and yarn.lock tracked
 
