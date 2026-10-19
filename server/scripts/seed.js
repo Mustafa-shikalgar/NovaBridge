@@ -8,37 +8,37 @@ const demoCourses = [
   {
     customId: 'sc1',
     title: 'Mastering QuickBooks Online & Financial Bookkeeping',
-    price: 429,
+    price: 1,
     instructor: 'Mark Smolen'
   },
   {
     customId: 'sc2',
     title: 'SAP FICO (Financial Accounting & Management Accounting)',
-    price: 509,
+    price: 1,
     instructor: 'Rana W Mehmood'
   },
   {
     customId: 'sc3',
     title: 'QuickBooks Online Complex Issues And Advanced Techniques',
-    price: 399,
+    price: 1,
     instructor: 'Mark Smolen'
   },
   {
     customId: 'sc4',
     title: 'Excel Crash Course: Master Excel for Financial Analysis',
-    price: 469,
+    price: 1,
     instructor: 'Scott Powell'
   },
   {
     customId: 'sc5',
     title: 'Distributed System Design & High-Throughput Microservices',
-    price: 599,
+    price: 1,
     instructor: 'Prof. Robert Morris (MIT)'
   },
   {
     customId: 'sc6',
     title: 'Competitive Programming Masterclass (Codeforces Candidate Master)',
-    price: 499,
+    price: 1,
     instructor: 'Jatin Vishwakarma (IITB)'
   }
 ];
